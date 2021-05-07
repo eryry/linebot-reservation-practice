@@ -1,11 +1,26 @@
 // Postgresを使うためのパラメータ設定
 const connection = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
-   });
-   connection.connect();
+ connectionString: process.env.DATABASE_URL,
+ ssl: {
+   rejectUnauthorized: false
+ }
+});
+connection.connect();
+
+// ライブラリの読み込み
+const { Client } = require('pg');
+
+// 顧客データベースの作成
+const create_userTable = {
+    text:'CREATE TABLE IF NOT EXISTS users (id SERIAL NOT NULL, line_uid VARCHAR(255), display_name VARCHAR(255), timestamp VARCHAR(255), cuttime SMALLINT, shampootime SMALLINT, colortime SMALLINT, spatime SMALLINT);'
+ };
+
+//  クエリを実行
+connection.query(create_userTable)
+   .then(()=>{
+       console.log('table users created successfully!!');
+   })
+   .catch(e=>console.log(e));
 
 
 const express = require('express');
@@ -65,17 +80,3 @@ const handleMessageEvent = async (ev) => {
 }
 
 
-// ライブラリの読み込み
-const { Client } = require('pg');
-
-// 顧客データベースの作成
-const create_userTable = {
-    text:'CREATE TABLE IF NOT EXISTS users (id SERIAL NOT NULL, line_uid VARCHAR(255), display_name VARCHAR(255), timestamp VARCHAR(255), cuttime SMALLINT, shampootime SMALLINT, colortime SMALLINT, spatime SMALLINT);'
- };
-
-//  クエリを実行
-connection.query(create_userTable)
-   .then(()=>{
-       console.log('table users created successfully!!');
-   })
-   .catch(e=>console.log(e));
