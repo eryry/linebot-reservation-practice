@@ -2,10 +2,10 @@
 const connection = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: {
-        rejectUnauthorized: false
+      rejectUnauthorized: false
     }
-});
-connection.connect();
+   });
+   connection.connect();
 
 
 const express = require('express');
@@ -60,7 +60,7 @@ const handleMessageEvent = async (ev) => {
 
     return client.replyMessage(ev.replyToken,{
         "type":"text",
-        "text":`${profile.displayName}さん、いま${text}って言いました？`
+        "text":`${profile.displayName}さん、いま『${text}』って言いました？`
     });
 }
 
