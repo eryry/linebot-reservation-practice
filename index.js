@@ -1,6 +1,17 @@
+// Postgresを使うためのパラメータ設定
+const connection = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+connection.connect();
+
+
 const express = require('express');
 const app = express();
 const line = require('@line/bot-sdk');
+const { Client } = require('pg');
 const PORT = process.env.PORT || 5000
 
 const config = {
@@ -52,3 +63,19 @@ const handleMessageEvent = async (ev) => {
         "text":`${profile.displayName}さん、いま${text}って言いました？`
     });
 }
+
+
+// ライブラリの読み込み
+const { Client } = require('pg');
+
+// 顧客データベースの作成
+const create_userTable = {
+    text:'CREATE TABLE IF NOT EXISTS users (id SERIAL NOT NULL, line_uid VARCHAR(255), display_name VARCHAR(255), timestamp VARCHAR(255), cuttime SMALLINT, shampootime SMALLINT, colortime SMALLINT, spatime SMALLINT);'
+ };
+
+//  クエリを実行
+connection.query(create_userTable)
+   .then(()=>{
+       console.log('table users created successfully!!');
+   })
+   .catch(e=>console.log(e));
