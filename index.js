@@ -1,3 +1,6 @@
+// ライブラリの読み込み
+const { Client } = require('pg');
+
 // Postgresを使うためのパラメータ設定
 const connection = new Client({
  connectionString: process.env.DATABASE_URL,
@@ -7,8 +10,6 @@ const connection = new Client({
 });
 connection.connect();
 
-// ライブラリの読み込み
-const { Client } = require('pg');
 
 // 顧客データベースの作成
 const create_userTable = {
@@ -21,6 +22,9 @@ connection.query(create_userTable)
        console.log('table users created successfully!!');
    })
    .catch(e=>console.log(e));
+
+
+   
 
 
 const express = require('express');
