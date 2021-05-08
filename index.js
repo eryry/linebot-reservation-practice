@@ -1,5 +1,5 @@
 // ライブラリの読み込み
-const { Client } = require('pg');
+// const { Client } = require('pg');
 
 // Postgresを使うためのパラメータ設定
 const connection = new Client({
