@@ -1,5 +1,5 @@
 // ライブラリの読み込み
-// const { Client } = require('pg');
+import { Client } from 'pg';
 
 // Postgresを使うためのパラメータ設定
 const connection = new Client({
@@ -37,10 +37,10 @@ connection.query(table_insert)
 const INITIAL_TREAT = [20,10,40,15,30,15,10];  //施術時間初期値
 
 
-const express = require('express');
+import express from 'express';
 const app = express();
-const line = require('@line/bot-sdk');
-const { Client } = require('pg');
+import { Client as _Client, middleware } from '@line/bot-sdk';
+// const { Client } = require('pg');
 const PORT = process.env.PORT || 5000
 
 const config = {
@@ -48,10 +48,10 @@ const config = {
     channelSecret:process.env.CHANNEL_SECRET
 };
 
-const client = new line.Client(config);
+const client = new _Client(config);
 
 app
-    .post('/hook',line.middleware(config),(req,res)=> lineBot(req,res))
+    .post('/hook',middleware(config),(req,res)=> lineBot(req,res))
     .listen(PORT,()=>console.log(`Listening on ${PORT}`));
 
 const lineBot = (req,res) => {
